@@ -1,0 +1,38 @@
+\newmdenv[tikzsetting={draw=black,fill=white,fill opacity=0.7, line width=4pt},backgroundcolor=none,leftmargin=0,rightmargin=0,innertopmargin=4pt]{Conference}
+
+\newmdenv[tikzsetting={draw=black,fill=white,fill opacity=0.7, line width=4pt},backgroundcolor=none,leftmargin=0,rightmargin=0,innertopmargin=4pt,skipbelow=\baselineskip,%
+skipabove=\baselineskip]{TitleBox}
+
+\title{\large Scalaz}
+\subtitle{\small the history, the motivation, the battles, the future}
+\institute[NICTA]{National ICT Australia}
+
+{
+  \usebackgroundtemplate{\includegraphics[width=1.0\paperwidth]{image/title-background.png}}
+
+  \begin{frame}[plain] 
+
+  \begin{Conference}
+    \begin{center}
+    {Lambdajam Chicago 2014}
+
+    \hspace{1em}
+
+    {\insertauthor}
+    \end{center}
+  \end{Conference}
+
+  \vspace{3em}
+
+  \begin{TitleBox}
+    \begin{center}
+    {\huge \inserttitle}
+
+    \hspace{1em}
+    
+    {\huge \insertsubtitle}
+    \end{center}
+  \end{TitleBox}
+
+  \end{frame}
+}

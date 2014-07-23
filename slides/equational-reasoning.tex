@@ -1,0 +1,127 @@
+{
+  \newmdenv[tikzsetting={draw=black,fill=white,fill opacity=0.7, line width=4pt},backgroundcolor=none,leftmargin=0,rightmargin=0,innertopmargin=4pt,skipbelow=\baselineskip,%
+  skipabove=\baselineskip]{TitleBoxEquationalReasoning}
+
+  \usebackgroundtemplate{\includegraphics[width=1.0\paperwidth]{image/title-background.png}}
+
+  \begin{frame}[plain] 
+  \title{Equational Reasoning}
+  
+  \vspace{3em}
+
+  \begin{TitleBoxEquationalReasoning}
+    \begin{center}
+    {\Large \inserttitle}
+    \end{center}
+  \end{TitleBoxEquationalReasoning}
+
+  \end{frame}
+}
+
+\begin{frame}
+\frametitle{Equational Reasoning}
+\begin{block}{Equational reasoning is a program property}
+that allows replacing arbitrary program expressions with values, ultimately providing a tool to construct non-trivial programs.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Equational Reasoning}
+We want \textbf{the potential} to replace expressions with values:
+\begin{itemize}
+  \item<1> without consequence on program behaviour
+  \item<2> for the general case i.e. not having to reason about concretes for abstract concepts \tiny{\emph{cough} \lstinline{scala.Seq} \emph{cough}}\normalsize
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Equational Reasoning}
+\begin{lstlisting}[style=scala,mathescape]
+  val i: String = $\displaystyle\ldots$
+  val result: String = `"abc" concat i`
+  method1(`result`, `result`)
+  $\displaystyle\ldots$
+  method2(`result`)
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (aa) at ($(a1)+(4,3.5)$); 
+\node[note,draw,callout relative pointer={($(aa)-(5.5,-1.1)$)},right] at (aa) {can this expression replace its value?};
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Equational Reasoning}
+\begin{lstlisting}[style=scala,mathescape]
+  val i: String = $\displaystyle\ldots$
+  // val result: String = "abc" concat i
+  method1(`"abc" concat i`, `"abc" concat i`)
+  $\displaystyle\ldots$
+  method2(`"abc" concat i`)
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (aa) at ($(a1)+(4.5,2.5)$);
+\node[note,draw,callout relative pointer={($(aa)-(8.0,-2.7)$)},right] at (aa) {has the program changed?};
+\node[note,draw,callout relative pointer={($(aa)-(5.0,-2.7)$)},right] at (aa) {has the program changed?};
+\node[note,draw,callout relative pointer={($(aa)-(8.0,-1.9)$)},right] at (aa) {has the program changed?};
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Unequational Unreasoning}
+\begin{lstlisting}[style=scala,mathescape]
+  val i: StringBuilder = $\displaystyle\ldots$
+  val b: StringBuilder = "abc"
+  val result: StringBuilder = `b append i`
+  method1(`result`, `result`)
+  $\displaystyle\ldots$
+  method2(`result`)
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (aa) at ($(a1)+(5.2,7.0)$); 
+\node[note,draw,callout relative pointer={($(aa)-(7.0,5.5)$)},right] at (aa) {can this expression replace its value?};
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Unequational Unreasoning}
+\begin{lstlisting}[style=scala,mathescape]
+  val i: StringBuilder = $\displaystyle\ldots$
+  val b: StringBuilder = "abc"
+  // val result: StringBuilder = b append i
+  method1(`b append i`, `b append i`)
+  $\displaystyle\ldots$
+  method2(`b append i`)
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (aa) at ($(a1)+(4.5,2.5)$);
+\node[note,draw,callout relative pointer={($(aa)-(8.7,-2.2)$)},right] at (aa) {has the program changed?};
+\node[note,draw,callout relative pointer={($(aa)-(6.5,-2.2)$)},right] at (aa) {has the program changed?};
+\node[note,draw,callout relative pointer={($(aa)-(8.7,-1.4)$)},right] at (aa) {has the program changed?};
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Equational Reasoning}
+\begin{center}
+The program has changed. Equational reasoning has been lost.
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Equational Reasoning}
+\begin{block}{Equational reasoning \ldots}
+\begin{itemize}
+  \item gives rise to a catalogue of practical benefits
+  \item is \emph{essential} to a high-performing software development team
+\end{itemize}
+\end{block}
+\end{frame}

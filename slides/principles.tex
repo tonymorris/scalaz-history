@@ -1,0 +1,85 @@
+% To see the difference played out, all you have to do is look at the Scalaz
+% mailing list, where we routinely discuss "what is the correct principle here?"
+% versus the Scala mailing lists, where the cultural atmosphere is reduced "to
+% the sordid, petty senselessness of a bickering family that haggles over
+% trivial concretes, while betraying all its major values, selling out its
+% future for some spurious advantage of the moment. To make it more grotesque,
+% that haggling is accompanied by an aura of hysterical self-righteousness, in
+% the form of belligerent assertions that one must compromise with anybody on
+% anything (except on the tenet that one must compromise) and by panicky appeals
+% to “practicality.”"
+
+\begin{frame}
+\frametitle{The ultimate goal}
+\begin{itemize}
+  \item reason about code to know what it does
+  \item incrementally improve code
+  \item everything it takes to hit the goal \textbf{and nothing more}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The ultimate goal}
+\begin{block}{This means we must}
+\begin{itemize}
+  \item exploit existing ideas that are known to work
+  \item efficiently reject ideas that are known to not work
+  \item explore new ideas for which there is no known answer
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Readabillaty Factory}
+\begin{block}{To assist in code readability}
+\begin{itemize}
+  \item we count the number of characters in our source code
+  \item we look up the meaning of our identifier names in a dictionary
+  \item we use the latest test tools to report the number of pixels in our critical source code
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Careful analysis}
+\begin{center}
+Diagram of typical whiteboard session
+
+\includegraphics<1>[height=5.2cm]{image/loljava.png}
+
+Careful selection of identifier names, ensuring a correspondence to the real world.
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Reject the dunce cap}
+\begin{center}
+Just kidding!
+
+\includegraphics<1>[height=5.2cm]{image/loljava-crossed.png}
+
+Crass bullshizzles is rejected from the comfort of an ivory tower.
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Principles}
+\begin{block}{Scalaz explores three principles}
+\begin{enumerate}
+  \item \normalsize{\textbf{parametricity} or \textbf{free theorems}}
+
+      \tiny{parametric generalisation to eliminate candidate implementations of a type and construct theorems (documentation) based on type}
+  \item \normalsize{\textbf{equational reasoning}}
+
+      \tiny{construct large programs from smaller programs and vice versa}
+  \item \normalsize{\textbf{abstraction}}
+
+      \tiny{discard expenditure of repetitious effort}
+
+\end{enumerate}
+\end{block}
+\end{frame}

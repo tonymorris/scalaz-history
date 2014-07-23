@@ -1,0 +1,301 @@
+{
+  \newmdenv[tikzsetting={draw=black,fill=white,fill opacity=0.7, line width=4pt},backgroundcolor=none,leftmargin=0,rightmargin=0,innertopmargin=4pt,skipbelow=\baselineskip,%
+  skipabove=\baselineskip]{TitleBoxParametricity}
+
+  \usebackgroundtemplate{\includegraphics[width=1.0\paperwidth]{image/title-background.png}}
+
+  \begin{frame}[plain] 
+  \title{Parametricity}
+  
+  \vspace{3em}
+
+  \begin{TitleBoxParametricity}
+    \begin{center}
+    {\Large \inserttitle}
+    \end{center}
+  \end{TitleBoxParametricity}
+
+  \end{frame}
+}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{center}
+Using a technique described by Philip Wadler\cite{wadler1989theorems}, we can obtain machine-checked documentation.
+
+\includegraphics[height=1.8cm]{image/tissues.jpg}
+
+Let's use an example to progressively exploit this technique.
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{lstlisting}[style=scala,mathescape]
+def value(
+  f: List[Int => String]
+, x: Int
+): List[String] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{itemize}
+  \item \tiny{what does this function \lstinline$value$ do?}
+  \item \tiny{how many of the resulting strings come from application of the list of functions?}
+  \item \tiny{are some of those strings created without using the list of functions?}
+  \item \tiny{if so, what are their values?}
+  \item \tiny{do we apply those functions to a different integer to the one given?}
+  \item \tiny{are the arguments used at all, or maybe just one of them?}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{center}
+At present, there is no way for us to answer these questions
+\end{center}
+\begin{center}
+The \textbf{only} thing we know is that it returns one of many possible list of strings
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{lstlisting}[style=scala,mathescape]
+def value[A, B](
+  f: List[A => B]
+, x: A
+): List[B] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{block}{By using type parameters, we know some things}
+\begin{itemize}
+  \item \tiny{every \lstinline$B$ in the result came from application of one and only one of the given functions}
+  \item \tiny{(it follows that) if the resulting list is empty, the input list is empty}
+  \item \tiny{for a given function application (to arrive at \lstinline$B$), we applied the given \lstinline$A$}
+  \item \tiny{either this function uses its list argument or it returns \lstinline$Nil$}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{But we still have questions}
+\begin{itemize}
+  \item<1-> \tiny{what arrangement of application of the list of functions occurs?}
+  \item<2-> \tiny{do we use each function a specific number of times?}
+  \item<3-> \tiny{do we use the arguments at all (we know that if not, we always get \lstinline$Nil$)?}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{lstlisting}[style=scala,mathescape]
+def value[F[_]: Functor, A, B](
+  f: F[A => B]
+, x: A
+): F[B] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{block}{where \lstinline$Functor$ is given by}
+\begin{lstlisting}[style=scala]
+trait Functor[F[_]] {
+  def map[A, B](f: A => B): F[A] => F[B]
+}
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{lstlisting}[style=scala,mathescape]
+def value[F[_]: Functor, A, B](
+  f: F[A => B]
+, x: A
+): F[B] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{block}{Everything we need and nothing more}
+\textbf{This function maps application to the given \lstinline$A$ across every function in the context of \lstinline$F$}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{Importantly}
+\begin{itemize}
+  \item<1-> I can \emph{prove this by parametricity}.
+  \item<2-> $\therefore$ if two voices disagree what this function does, at least one of them is wrong.
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{I don't need to \ldots}
+\begin{itemize}
+  \item<1> ask Fred what his function does
+  \item<2> inspect the source code under some pretention of ``readability''
+  \item<3> perform magic woo-woo hocus-pocus pompous drivel with identifier names
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Fast and Loose Reasoning}
+\begin{block}{Danielsson, Hughes, Jansson \& Gibbons \cite{danielsson2006fast} tell us:}
+\begin{quotation}
+Functional programmers often reason about programs as if
+they were written in a total language, expecting the results
+to carry over to non-total (partial) languages. We justify
+such reasoning.
+\end{quotation}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Fast and Loose Reasoning}
+\begin{block}{Scala has a \sout{few} lot of undermining escape hatches}
+\begin{itemize}
+  \item<2-> \lstinline{null} \tiny{(yes that \lstinline{null})\normalsize}
+  \item<3-> exceptions
+  \item<4-> Type-casing (\lstinline{isInstanceOf})
+  \item<5-> Type-casting (\lstinline{asInstanceOf})
+  \item<6-> Side-effects
+  \item<7-> \lstinline{equals}/\lstinline{toString}/\lstinline{hashCode}
+  \item<8-> \lstinline{notify}/\lstinline{wait}
+  \item<9-> \lstinline{classOf}/\lstinline{.getClass}
+  \item<10-> General recursion
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Parametricity}
+\framesubtitle{Fast and Loose Reasoning}
+\begin{block}{To trade it off}
+\begin{itemize}
+  \item<1-> What would be the costs and benefits by eliminating these escape hatches?
+  \item<2-> The Scalaz project explores this question with much rigour.
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Fast and Loose Reasoning}
+\begin{block}{The Scalazzi Safe Scala Subset}
+\begin{itemize}
+  \item \sout{\lstinline{null}}
+  \item \sout{exceptions}
+  \item \sout{Type-casing (\lstinline{isInstanceOf})}
+  \item \sout{Type-casting (\lstinline{asInstanceOf})}
+  \item \sout{Side-effects}
+  \item \sout{\lstinline{equals}/\lstinline{toString}/\lstinline{hashCode}}
+  \item \sout{\lstinline{notify}/\lstinline{wait}}
+  \item \sout{\lstinline{classOf}/\lstinline{.getClass}}
+  \item General recursion
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Fast and Loose Reasoning}
+\begin{block}{By the way}
+There exist reasonable objections to the morality of fast and loose reasoning.
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{Types do not always disambiguate}
+\begin{lstlisting}[style=scala,mathescape]
+def reverse[A](x: List[A]): List[A] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{but we can still tell a lot}
+\begin{lstlisting}[style=scala,mathescape]
+def reverse[A](x: List[A]): List[A] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\end{block}
+\textbf{Theorem:} Every element in the result appears in the input
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{lstlisting}[style=scala,mathescape]
+def reverse[A](x: List[A]): List[A] =
+  $\displaystyle\ldots$
+\end{lstlisting}
+\begin{block}{to disambiguate, compromise by using the next best thing}
+\begin{lstlisting}[style=scala,mathescape]
+$\displaystyle\forall x.$ reverse(reverse(x)) == x
+$\displaystyle\forall x. \forall y.$ reverse(x ++ y) == reverse(y) ++ reverse(x)
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+\framesubtitle{Types are Documentation}
+\begin{block}{In practice, the examples will be less trivial}
+\begin{itemize} 
+  \item<1-> \begin{lstlisting}[style=scala]
+def filterM[F[_]: Monad]
+  (p: A => F[Boolean]):
+  List[A] => F[List[A]]
+        \end{lstlisting}
+
+  \item<2-> \begin{lstlisting}[style=scala]
+trait Profunctor[F[_]] {
+  def dimap[A, B, C, D]
+    (p: B => A, q: C => D): 
+    F[A, C] => F[B, D]
+}  
+        \end{lstlisting}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Parametricity}
+``parametricity constantly tests more conditions than your unit test suite ever will'' \textemdash \emph{Someone}, 16 July 2014
+\end{frame}

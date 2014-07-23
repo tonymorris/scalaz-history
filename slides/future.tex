@@ -1,0 +1,70 @@
+{
+  \newmdenv[tikzsetting={draw=black,fill=white,fill opacity=0.7, line width=4pt},backgroundcolor=none,leftmargin=0,rightmargin=0,innertopmargin=4pt,skipbelow=\baselineskip,%
+  skipabove=\baselineskip]{TitleBoxFuture}
+
+  \usebackgroundtemplate{\includegraphics[width=1.0\paperwidth]{image/title-background.png}}
+
+  \begin{frame}[plain] 
+  \title{Where to from here?}
+  
+  \vspace{3em}
+
+  \begin{TitleBoxFuture}
+    \begin{center}
+    {\Large \inserttitle}
+    \end{center}
+  \end{TitleBoxFuture}
+
+  \end{frame}
+}
+
+
+\begin{frame}
+\frametitle{Where to from here?}
+\begin{center}
+Scalaz has principled, well-defined goals, but \ldots
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Where to from here?}
+\begin{center}
+
+\includegraphics<1>[height=5.8cm]{image/marginal-needs.png}
+
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Where to from here?}
+\begin{block}{So what for Scalaz?}
+Can we achieve better with less effort?
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Where to from here?}
+\begin{block}{Options}
+\begin{itemize}
+  \item<1> abandon the JVM and therefore, Scala
+  \item<2> continue to attempt to improve Scala, accepting relentless conflict
+  \item<3> accept the JVM, abandon Scala
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Where to from here?}
+\begin{block}{With a view to abandon Scala}
+\begin{itemize}
+  \item<1-> first, implement a working Scala abstract syntax tree
+  \item<1-> program against that AST (not text)
+  \item<2-> next, implement tools to transform the AST
+  \item<3-> finally, begin at a Scala AST only for exceptional legacy purposes
+\end{itemize}
+\end{block}
+\end{frame}
